@@ -2,3 +2,5 @@
 .vscode/settings.json
 solver
 *.o
+.vscode/configurationCache.log
+.vscode/dryrun.log

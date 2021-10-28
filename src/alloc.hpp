@@ -30,7 +30,16 @@ T*** allocate_3d_array(int nk, int nj, int ni) {
 
 template<class T>
 void deallocate_3d_array(T*** ptr, int nk, int nj, int ni) {
-    
+    for(int k = 0; k < nk; k++) {
+        for(int j = 0; j < nj; j++) {
+            delete [] ptr[k][j];
+        }
+    }
+    for(int k = 0; k < nk; k++) {
+        delete [] ptr[k];
+    }
+    delete [] ptr;
+    ptr = nullptr;
 }
 
 #endif
