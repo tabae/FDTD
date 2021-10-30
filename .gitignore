@@ -4,3 +4,6 @@ solver
 *.o
 .vscode/configurationCache.log
 .vscode/dryrun.log
+test/tester
+html/*
+latex/*
