@@ -1,7 +1,7 @@
 #ifndef __ALLOC_HPP__
 #define __ALLOC_HPP__
 
-#include "color.hpp"
+#include "log.hpp"
 #include <iostream>
 #include <cstdlib>
 
@@ -12,9 +12,7 @@ template<class T> void set_value(T***, int, int, int, T val = 0);
 template<class T>
 T*** allocate_3d_array(int nk, int nj, int ni) {
     if(ni <= 0 || nj <= 0 || nk <= 0) {
-        std::cerr << RED "[allocate_3d_array] Error!\n" PLAIN;
-        std::cerr << "\t non positive value is assigned to array size, (" << nk << "," << nj << "," << ni << ")\n";
-        std::cerr << "\t must be positive integer.\n" << std::endl;
+        err("allocate_3d_array", "Error!\n\tnon positive values are assigned to array size, they must be positive integers.");
         exit(1);
     }
     T ***ptr = new T**[nk];

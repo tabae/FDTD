@@ -1,6 +1,6 @@
 #include "config.hpp"
 #include "field.hpp"
-#include "color.hpp"
+#include "log.hpp"
 #include "setup.hpp"
 #include "e_field.hpp"
 #include "h_field.hpp"
@@ -9,10 +9,11 @@
 #include <iostream>
 
 int main() {
+    log("main", "Launch Solver");
     config<float> cfg;
     field<float> fld;
     setup(cfg, fld);
-    std::cout << "[main] Start time step loop\n" << std::endl;
+    log("main", "Begin Time Step Loop");
     float t = 0;
     for(int step = 0; step < cfg.total_step; step++) {
         e_field(fld);
@@ -21,7 +22,7 @@ int main() {
         h_field(fld);
         t += cfg.delta_t * 0.5;
     }
-    std::cout << "[main] Finish time step loop\n" << std::endl;
+    log("main", "Finish Time Step Loop");
     output();
     return 0;
 }

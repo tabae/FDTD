@@ -9,6 +9,7 @@ HEADERS=src/absorbing_boundary_condition.hpp \
 	src/e_field.hpp \
 	src/field.hpp \
 	src/h_field.hpp \
+	src/log.hpp \
 	src/medium.hpp \
 	src/output.hpp \
 	src/physical_constants.hpp \

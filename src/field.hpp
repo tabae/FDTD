@@ -2,7 +2,7 @@
 #define __FIELD_HPP__
 
 #include "config.hpp"
-#include "color.hpp"
+#include "log.hpp"
 #include "alloc.hpp"
 #include <iostream>
 
@@ -104,7 +104,7 @@ void field<T>::build(const config<T>& cfg) {
     set_value(this->idhx, this->nk, this->nj, this->ni);
     set_value(this->idhy, this->nk, this->nj, this->ni);
     set_value(this->idhz, this->nk, this->nj, this->ni);
-    std::cout << "[field<T>::field] Array allocation is finished\n" << std::endl;
+    log("field<T>::field", "Finished Allocating Arrays");
 } 
 
 /**
@@ -124,7 +124,7 @@ field<T>::~field() {
     deallocate_3d_array<id_size_t>(this->idhx, this->nk, this->nj, this->ni);
     deallocate_3d_array<id_size_t>(this->idhy, this->nk, this->nj, this->ni);
     deallocate_3d_array<id_size_t>(this->idhz, this->nk, this->nj, this->ni);
-    std::cout << "[field<T>::~field] Array deallocation is finished\n" << std::endl;
+    log("field<T>::field", "Finished Deallocating Arrays");
 }
 
 #endif
