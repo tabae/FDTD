@@ -9,10 +9,10 @@
 #include <iostream>
 
 int main() {
-    config cfg;
+    config<float> cfg;
     field<float> fld;
     setup(cfg, fld);
-    std::cout << GREEN "[main] Start time step loop\n" PLAIN << std::endl;
+    std::cout << "[main] Start time step loop\n" << std::endl;
     float t = 0;
     for(int step = 0; step < cfg.total_step; step++) {
         e_field(fld);
@@ -21,7 +21,7 @@ int main() {
         h_field(fld);
         t += cfg.delta_t * 0.5;
     }
-    std::cout << GREEN "[main] Finish time step loop\n" PLAIN << std::endl;
+    std::cout << "[main] Finish time step loop\n" << std::endl;
     output();
     return 0;
 }

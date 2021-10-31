@@ -3,12 +3,12 @@
 
 #include "config.hpp"
 #include "field.hpp"
-template<class T> void setup(config& cfg, field<T>& fld);
+template<class T> void setup(config<T>& cfg, field<T>& fld);
 
 template<class T>
-void setup(config &cfg, field<T> &fld) {
+void setup(config<T> &cfg, field<T> &fld) {
     cfg.read_from_file();
-    fld = field<T>(cfg.ni, cfg.nj, cfg.nk);
+    fld.build(cfg);
 }
 
 #endif

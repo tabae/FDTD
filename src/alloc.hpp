@@ -7,6 +7,7 @@
 
 template<class T> T*** allocate_3d_array(int, int, int);
 template<class T> void deallocate_3d_array(T ***, int, int, int);
+template<class T> void set_value(T***, int, int, int, T val = 0);
 
 template<class T>
 T*** allocate_3d_array(int nk, int nj, int ni) {
@@ -40,6 +41,17 @@ void deallocate_3d_array(T*** ptr, int nk, int nj, int ni) {
     }
     delete [] ptr;
     ptr = nullptr;
+}
+
+template<class T>
+void set_value(T*** ptr, int nk, int nj, int ni, T val) {
+    for(int k = 0; k < nk; k++) {
+        for(int j = 0; j < nj; j++) {
+            for(int i = 0; i < ni; i++) {
+                ptr[k][j][i] = val;
+            }
+        }
+    }
 }
 
 #endif
