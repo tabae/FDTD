@@ -47,16 +47,53 @@ public:
     id_size_t ***idhy;
     //! 磁界座標系の媒質情報へのインデックス Z方向
     id_size_t ***idhz;
+    //! 電界成分X方向の係数
+    T* cex;
+    //! 電界成分X方向の係数
+    T* cexly;
+    //! 電界成分X方向の係数
+    T* cexlz;
+    //! 電界成分Y方向の係数
+    T* cey;
+    //! 電界成分Y方向の係数
+    T* ceylz;
+    //! 電界成分Y方向の係数
+    T* ceylx;
+    //! 電界成分Z方向の係数
+    T* cez;
+    //! 電界成分Z方向の係数
+    T* cezlx;
+    //! 電界成分Z方向の係数
+    T* cezly;
+    //! 磁界成分X方向の係数
+    T* chx;
+    //! 磁界成分X方向の係数
+    T* chxly;
+    //! 磁界成分X方向の係数
+    T* chxlz;
+    //! 磁界成分Y方向の係数
+    T* chy;
+    //! 磁界成分Y方向の係数
+    T* chylz;
+    //! 磁界成分Y方向の係数
+    T* chylx;
+    //! 磁界成分Z方向の係数
+    T* chz;
+    //! 磁界成分Z方向の係数
+    T* chzlx;
+    //! 磁界成分Z方向の係数
+    T* chzly;
     field();
-    void build(const config<T>& cfg);
     ~field();
+    void set_nullptr();
+    void build(const config<T>& cfg);
 };
 
 /**
- * @brief 各ポインタをヌル初期化します．
+ * @brief 全ポインタをヌル初期化
  */
 template<class T>
-field<T>::field() {
+void field<T>::set_nullptr() {
     this->ex = nullptr;
     this->ey = nullptr;
     this->ez = nullptr;
@@ -69,7 +106,33 @@ field<T>::field() {
     this->idhx = nullptr;
     this->idhy = nullptr;
     this->idhz = nullptr;
+    this->cex = nullptr;
+    this->cexly = nullptr;
+    this->cexlz = nullptr;
+    this->cey = nullptr;
+    this->ceylz = nullptr;
+    this->ceylx = nullptr;
+    this->cez = nullptr;
+    this->cezlx = nullptr;
+    this->cezly = nullptr;
+    this->chx = nullptr;
+    this->chxly = nullptr;
+    this->chxlz = nullptr;
+    this->chy = nullptr;
+    this->chylz = nullptr;
+    this->chylx = nullptr;
+    this->chz = nullptr;
+    this->chzlx = nullptr;
+    this->chzly = nullptr;
 }
+
+/**
+ * @brief 各ポインタをヌル初期化します．
+ */
+template<class T>
+field<T>::field() {
+    this->set_nullptr();
+}   
 
 /**
  * @brief 配列の動的確保を行い，値をゼロで初期化します．
@@ -92,6 +155,24 @@ void field<T>::build(const config<T>& cfg) {
     this->idhx = allocate_3d_array<id_size_t>(this->nk, this->nj, this->ni);
     this->idhy = allocate_3d_array<id_size_t>(this->nk, this->nj, this->ni);
     this->idhz = allocate_3d_array<id_size_t>(this->nk, this->nj, this->ni);
+    this->cex = new T[cfg.n_medium];
+    this->cexly = new T[cfg.n_medium]; //! cexlz は cexly のエイリアス
+    this->cexlz = this->cexly;
+    this->cey = new T[cfg.n_medium];
+    this->ceylz = new T[cfg.n_medium]; //! ceylx は ceylz のエイリアス
+    this->ceylx = this->ceylz;
+    this->cez = new T[cfg.n_medium];
+    this->cezlx = new T[cfg.n_medium]; //! cezly は cezlx のエイリアス
+    this->cezly = this->cezlx;
+    this->chx = new T[cfg.n_medium];
+    this->chxly = new T[cfg.n_medium];
+    this->chxlz = new T[cfg.n_medium];
+    this->chy = new T[cfg.n_medium];
+    this->chylx = new T[cfg.n_medium];
+    this->chylz = new T[cfg.n_medium];
+    this->chz = new T[cfg.n_medium];
+    this->chzlx = new T[cfg.n_medium];
+    this->chzly = new T[cfg.n_medium];
     set_value(this->ex, this->nk, this->nj, this->ni);
     set_value(this->ey, this->nk, this->nj, this->ni);
     set_value(this->ez, this->nk, this->nj, this->ni);
@@ -124,6 +205,22 @@ field<T>::~field() {
     deallocate_3d_array<id_size_t>(this->idhx, this->nk, this->nj, this->ni);
     deallocate_3d_array<id_size_t>(this->idhy, this->nk, this->nj, this->ni);
     deallocate_3d_array<id_size_t>(this->idhz, this->nk, this->nj, this->ni);
+    delete [] this->cex;
+    delete [] this->cexly;
+    delete [] this->cey;
+    delete [] this->ceylx;
+    delete [] this->cez;
+    delete [] this->cezly;
+    delete [] this->chx;
+    delete [] this->chxly;
+    delete [] this->chxlz;
+    delete [] this->chy;
+    delete [] this->chylx;
+    delete [] this->chylz;
+    delete [] this->chz;
+    delete [] this->chzlx;
+    delete [] this->chzly;
+    this->set_nullptr();
     log("field<T>::field", "Finished Deallocating Arrays");
 }
 
