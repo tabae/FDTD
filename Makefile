@@ -4,6 +4,8 @@ LDFLAGS=$(CXXFLAGS)
 EXE=solver
 SRC=src/main.cpp
 HEADERS=src/absorbing_boundary_condition.hpp \
+	src/alloc.hpp \
+	src/coefficient.hpp \
 	src/color.hpp \
 	src/config.hpp \
 	src/e_field.hpp \

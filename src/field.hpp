@@ -66,19 +66,13 @@ public:
     //! 電界成分Z方向の係数
     T* cezly;
     //! 磁界成分X方向の係数
-    T* chx;
-    //! 磁界成分X方向の係数
     T* chxly;
     //! 磁界成分X方向の係数
     T* chxlz;
     //! 磁界成分Y方向の係数
-    T* chy;
-    //! 磁界成分Y方向の係数
     T* chylz;
     //! 磁界成分Y方向の係数
     T* chylx;
-    //! 磁界成分Z方向の係数
-    T* chz;
     //! 磁界成分Z方向の係数
     T* chzlx;
     //! 磁界成分Z方向の係数
@@ -115,13 +109,10 @@ void field<T>::set_nullptr() {
     this->cez = nullptr;
     this->cezlx = nullptr;
     this->cezly = nullptr;
-    this->chx = nullptr;
     this->chxly = nullptr;
     this->chxlz = nullptr;
-    this->chy = nullptr;
     this->chylz = nullptr;
     this->chylx = nullptr;
-    this->chz = nullptr;
     this->chzlx = nullptr;
     this->chzly = nullptr;
 }
@@ -140,6 +131,7 @@ field<T>::field() {
  */
 template<class T>
 void field<T>::build(const config<T>& cfg) {
+    log("field<T>::field", "Begin Allocating Arrays");
     this->nk = cfg.nk;
     this->nj = cfg.nj;
     this->ni = cfg.ni;
@@ -156,21 +148,18 @@ void field<T>::build(const config<T>& cfg) {
     this->idhy = allocate_3d_array<id_size_t>(this->nk, this->nj, this->ni);
     this->idhz = allocate_3d_array<id_size_t>(this->nk, this->nj, this->ni);
     this->cex = new T[cfg.n_medium];
-    this->cexly = new T[cfg.n_medium]; //! cexlz は cexly のエイリアス
-    this->cexlz = this->cexly;
+    this->cexly = new T[cfg.n_medium]; 
+    this->cexlz = new T[cfg.n_medium];
     this->cey = new T[cfg.n_medium];
-    this->ceylz = new T[cfg.n_medium]; //! ceylx は ceylz のエイリアス
-    this->ceylx = this->ceylz;
+    this->ceylz = new T[cfg.n_medium];
+    this->ceylx = new T[cfg.n_medium];
     this->cez = new T[cfg.n_medium];
-    this->cezlx = new T[cfg.n_medium]; //! cezly は cezlx のエイリアス
-    this->cezly = this->cezlx;
-    this->chx = new T[cfg.n_medium];
+    this->cezlx = new T[cfg.n_medium];
+    this->cezly = new T[cfg.n_medium];
     this->chxly = new T[cfg.n_medium];
     this->chxlz = new T[cfg.n_medium];
-    this->chy = new T[cfg.n_medium];
     this->chylx = new T[cfg.n_medium];
     this->chylz = new T[cfg.n_medium];
-    this->chz = new T[cfg.n_medium];
     this->chzlx = new T[cfg.n_medium];
     this->chzly = new T[cfg.n_medium];
     set_value(this->ex, this->nk, this->nj, this->ni);
@@ -185,7 +174,7 @@ void field<T>::build(const config<T>& cfg) {
     set_value(this->idhx, this->nk, this->nj, this->ni);
     set_value(this->idhy, this->nk, this->nj, this->ni);
     set_value(this->idhz, this->nk, this->nj, this->ni);
-    log("field<T>::field", "Finished Allocating Arrays");
+    log("field<T>::field", "Finish Allocating Arrays");
 } 
 
 /**
@@ -193,6 +182,7 @@ void field<T>::build(const config<T>& cfg) {
  */
 template<class T>
 field<T>::~field() {
+    log("field<T>::field", "Begin Deallocating Arrays");
     deallocate_3d_array<T>(this->ex, this->nk, this->nj, this->ni);
     deallocate_3d_array<T>(this->ey, this->nk, this->nj, this->ni);
     deallocate_3d_array<T>(this->ez, this->nk, this->nj, this->ni);
@@ -207,21 +197,21 @@ field<T>::~field() {
     deallocate_3d_array<id_size_t>(this->idhz, this->nk, this->nj, this->ni);
     delete [] this->cex;
     delete [] this->cexly;
+    delete [] this->cexlz;
     delete [] this->cey;
+    delete [] this->ceylz;
     delete [] this->ceylx;
     delete [] this->cez;
+    delete [] this->cezlx;
     delete [] this->cezly;
-    delete [] this->chx;
     delete [] this->chxly;
     delete [] this->chxlz;
-    delete [] this->chy;
     delete [] this->chylx;
     delete [] this->chylz;
-    delete [] this->chz;
     delete [] this->chzlx;
     delete [] this->chzly;
     this->set_nullptr();
-    log("field<T>::field", "Finished Deallocating Arrays");
+    log("field<T>::field", "Finish Deallocating Arrays");
 }
 
 #endif

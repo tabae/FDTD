@@ -24,5 +24,6 @@ int main() {
     }
     log("main", "Finish Time Step Loop");
     output();
+    log("main", "Shutdown Solver");
     return 0;
 }
