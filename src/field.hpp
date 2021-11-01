@@ -78,9 +78,11 @@ public:
     //! 磁界成分Z方向の係数
     T* chzly;
     field();
+    field(const config<T>& cfg);
+    field& operator=(field&& field);
     ~field();
+private:
     void set_nullptr();
-    void build(const config<T>& cfg);
 };
 
 /**
@@ -127,11 +129,12 @@ field<T>::field() {
 
 /**
  * @brief 配列の動的確保を行い，値をゼロで初期化します．
- * @details i方向にメモリ上で連続するように確保を行います．つまり，格子サイズが(NX,NY,NZ)のとき，`field(NZ, NY, NX)`とするべきです．
+ * @details i方向にメモリ上で連続するように確保を行います.
  */
 template<class T>
-void field<T>::build(const config<T>& cfg) {
+field<T>::field(const config<T>& cfg) {
     log("field<T>::field", "Begin Allocating Arrays");
+    this->set_nullptr();
     this->nk = cfg.nk;
     this->nj = cfg.nj;
     this->ni = cfg.ni;
@@ -212,6 +215,45 @@ field<T>::~field() {
     delete [] this->chzly;
     this->set_nullptr();
     log("field<T>::field", "Finish Deallocating Arrays");
+}
+
+/**
+ * @brief std::moveの処理．ポインタをヌル初期化する必要がある．
+ */
+template<class T>
+field<T>& field<T>::operator=(field<T>&& rhs) {
+    this->ni = rhs.ni;
+    this->nj = rhs.nj;
+    this->nk = rhs.nk;
+    this->ex = rhs.ex;
+    this->ey = rhs.ey;
+    this->ez = rhs.ez;
+    this->hx = rhs.hx;
+    this->hy = rhs.hy; 
+    this->hz = rhs.hz; 
+    this->idex = rhs.idex; 
+    this->idey = rhs.idey; 
+    this->idez = rhs.idez; 
+    this->idhx = rhs.idhx; 
+    this->idhy = rhs.idhy; 
+    this->idhz = rhs.idhz; 
+    this->cex = rhs.cex; 
+    this->cexly = rhs.cexly; 
+    this->cexlz = rhs.cexlz; 
+    this->cey = rhs.cey; 
+    this->ceylz = rhs.ceylz; 
+    this->ceylx = rhs.ceylx; 
+    this->cez = rhs.cez; 
+    this->cezlx = rhs.cezlx; 
+    this->cezly = rhs.cezly; 
+    this->chxly = rhs.chxly; 
+    this->chxlz = rhs.chxlz; 
+    this->chylz = rhs.chylz; 
+    this->chylx = rhs.chylx; 
+    this->chzlx = rhs.chzlx; 
+    this->chzly = rhs.chzly; 
+    rhs.set_nullptr();
+    return *this;
 }
 
 #endif

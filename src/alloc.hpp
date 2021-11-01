@@ -29,7 +29,9 @@ T*** allocate_3d_array(int nk, int nj, int ni) {
 
 template<class T>
 void deallocate_3d_array(T*** ptr, int nk, int nj, int ni) {
+    if(ptr == nullptr) return;
     for(int k = 0; k < nk; k++) {
+        if(ptr[k] == nullptr) continue;
         for(int j = 0; j < nj; j++) {
             delete [] ptr[k][j];
         }
