@@ -39,7 +39,6 @@ void ex_field(const field<T>& fld) {
                     cex[id] * ex[k][j][i]
                     + cexly[id] * (hz[k][j][i] - hz[k][j-1][i])
                     - cexlz[id] * (hy[k][j][i] - hy[k-1][j][i]);
-                ex[k][j][i] *= (id != 1);
             }
         }
     }
