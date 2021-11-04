@@ -69,7 +69,6 @@ void ey_field(const field<T>& fld) {
                     cey[id] * ey[k][j][i]
                     + ceylz[id] * (hx[k][j][i] - hx[k-1][j][i])
                     - ceylx[id] * (hz[k][j][i] - hz[k][j][i-1]);
-                ey[k][j][i] *= (id != 1);
             }
         }
     }
@@ -99,7 +98,6 @@ void ez_field(const field<T>& fld) {
                     cez[id] * ez[k][j][i]
                     + cezlx[id] * (hy[k][j][i] - hy[k][j][i-1])
                     - cezly[id] * (hx[k][j][i] - hx[k][j-1][i]);
-                ez[k][j][i] *= (id != 1);
             }
         }
     }

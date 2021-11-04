@@ -38,10 +38,10 @@ void config<T>::read_from_file() {
         this->delta_z = 1e-2;
         this->n_medium = 2;   
         this->mediums.resize(2);
-        //! 自由空間を追加．導電率0,誘電率SIGMA0，透磁率MU0
-        this->mediums[0] = medium<T>(0, 1, 1);  
         //! 完全導体を追加．完全導体は無限の導電率を持つが，計算上都合が悪いため，ダミーデータのみ代入しておく．
-        this->mediums[1] = medium<T>();
+        this->mediums[0] = medium<T>();
+        //! 自由空間を追加．導電率0,誘電率SIGMA0，透磁率MU0
+        this->mediums[1] = medium<T>(0, 1, 1);  
     };
     set_dummy_config();
 }
